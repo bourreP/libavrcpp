@@ -1,0 +1,102 @@
+#Timers
+
+##FAST PWM
+
+###DualMode
+
+Mode actuel de la lib intech.  
+-WGMn2 = 0  
+-WGMn1 = 1  
+-WGMn0 = 1  
+
+Fréquence fixe déterminée par le préscaler, possibilité de fixer deux PWM avec valeurs distinctes OCRnA et OCRnB.
+
+Possibilité de fixer soit l'état haut, soit l'état bas (COMnAx pour OCnA et COMnBx pour OCnB).
+
+###FrequencyMode
+
+Possibilité de régler la fréquence du pwm sur la sortie OCnB en fixant OCRnA (plus qu'un seul PWM utilisable) et le préscaler. La résolution de PWM est diminuée car comprise entre 0 et OCRnA. Si OCRnB >= OCRnA le rapport cyclique vaut 1.
+
+-WGMn2 = 1  
+-WGMn1 = 1  
+-WGMn0 = 1  
+
+*On peut générer un signal carré de rapport cyclique 1/2 en positionnant les COMnAx comme ceci:*  
+-COMnA1 = 0  
+-COMnA0 = 1  
+*Ou déconnecter OCnA et laisser l'utilisateur gérer la pin:*  
+-COMnA1 = 0  
+-COMnA0 = 0  
+
+Les deux autres modes possibles de COMnAx sont sans intérets. (Soit OCnA vaut toujours 1, soit OCnA vaut toujours 0)
+
+Possibilité de fixer soit l'état haut, soit l'état bas sur OCnB avec COMnBx.
+
+##CTC
+
+== FrequencyMode pour sa sortie OCnA.
+
+-WGMn2 = 0  
+-WGMn1 = 1  
+-WGMn0 = 0  
+-COMnA1 = 0  
+-COMnA0 = 1  
+
+Les deux autres modes possibles de COMnAx sont sans intérets. (Soit OCnA vaut toujours 1, soit OCnA vaut toujours 0)
+
+##Phase correct PWM mode
+
+###DualMode
+
+-WGMn2 = 0  
+-WGMn1 = 0  
+-WGMn0 = 1  
+
+Fréquence fixe déterminée par le préscaler, possibilité de fixer deux PWM avec valeurs distinctes OCRnA et OCRnB.
+
+Possibilité de fixer soit l'état haut, soit l'état bas (COMnAx pour OCnA et COMnBx pour OCnB).
+
+###FrequencyMode
+
+Possibilité de régler la fréquence du pwm sur la sortie OCnB en fixant OCRnA (plus qu'un seul PWM utilisable) et le préscaler. La résolution de PWM est diminuée car comprise entre 0 et OCRnA. Si OCRnB >= OCRnA le rapport cyclique vaut 1.
+
+-WGMn2 = 1  
+-WGMn1 = 1  
+-WGMn0 = 1  
+
+*On peut générer un signal carré de rapport cyclique 1/2 en positionnant les COMnAx comme ceci:*  
+-COMnA1 = 0  
+-COMnA0 = 1
+
+Les deux autres modes possibles de COMnAx sont sans intérets. (Soit OCnA vaut toujours 1, soit OCnA vaut toujours 0)
+
+Possibilité de fixer soit l'état haut, soit l'état bas sur OCnB avec COMnBx.
+
+# Capacités des timers en fonctions des différents AVR
+
+**!! Attention, il y a peut être des AVR un peut spéciaux que je n'ai pas vu !!**
+
+** J'ai aussi remarqué que certains Timer avaient des registres de comptage sur 16 bits mais ne pouvaient compter que sur 10 bits... C'est du cas par cas, et c'est plutôt embêtant**
+
+Timer 0: 
+-8 bits pour tous les autres.
+
+-16 bits pour ATmega16HVA2, ATmega16HVB, ATmega16HVBREVB, ATmega32HVB, ATmega32HVBREVB, ATmega64HVE, ATtiny10, ATtiny4, ATtiny5, ATtiny9.
+
+Timer 1:  
+-8 bits pour ATtiny15, ATtiny26, ATtiny261A, ATtiny43U, ATtiny461A, ATtiny861A, d'autres fichiers définissent des timers 1 8 bits mais ne sont pas dans les includes de avr/io.h (iotnx5.h, iotnx61.h)
+
+-Pour ATtiny40 ce timer est sur 16 bits mais il n'existe que TCNT1L et TCNT1H (pas de define pour TCNT1 dans la libc comme pour les autres avr qui ont un timer 16 bits afin de prendre en compte les deux deux registres 8 bits) explications: les registres TCNT1L et TCNT1H ne se suivent pas directement dans la mémoire.
+
+-16 bits pour les autres sauf erreur de ma part
+
+Timer 2: 8 bits pour tous.
+
+Timer 3: 16 bits pour tous.
+
+Timer 4:
+-8 bits pour ATmega16U4
+
+-16 bits pour ceux du fichier iomxx0_1.h, ATmega32U4, ATmega128RFA1
+
+Timer 5: 16 bits pour ceux du fichier iomxx0_1.h et  ATmega128RFA1
