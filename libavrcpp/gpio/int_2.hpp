@@ -32,19 +32,19 @@ public:
     {
         if (mode == LOW_LEVEL)
         {
-            EICRA &= ~(1 < ISC20) & ~(1 << ISC21);
+            EICRA &= ~(1 << ISC20) & ~(1 << ISC21);
         }
         else if (mode == ANY_LEVEL)
         {
-            EICRA = (EICRA & ~(1 < ISC21)) | (1 << ISC20);
+            EICRA = (EICRA & (1 << ISC20)) | ~(1 << ISC21);
         }
         else if (mode == FALLING_EDGE)
         {
-            EICRA = (EICRA & ~(1 < ISC20)) | (1 << ISC21);
+            EICRA = (EICRA & ~(1 << ISC20)) | (1 << ISC21);
         }
         else if (mode == RISING_EDGE)
         {
-            EICRA |= (1 < ISC20) | (1 << ISC21);
+            EICRA |= (1 << ISC20) | (1 << ISC21);
         }
     }
 
