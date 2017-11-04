@@ -1,0 +1,8 @@
+*.cproject
+*.project
+*.config
+*.creator
+*.creator.user
+*.files
+*.includes
+*.settings/
