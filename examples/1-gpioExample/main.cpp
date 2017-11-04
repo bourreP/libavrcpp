@@ -1,7 +1,4 @@
-// 8MHz oscillator
-#define	F_CPU 8000000UL
-
-#include "../../libavrcpp/gpio.hpp"
+#include <gpio.hpp>
 #include <util/delay.h>
 
 int main ()
