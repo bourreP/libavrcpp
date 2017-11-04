@@ -3,8 +3,8 @@ MCU = atmega328p
 AVRDUDE_DEVICE = m328p
 PORT = /dev/ttyACM0
 
-INCLUDES = -I/usr/avr/include
-CFLAGS=-g -Wall -mmcu=$(MCU) $(INCLUDES) -Os
+INCLUDES = -I/usr/avr/include -I../../libavrcpp
+CFLAGS=-g -Wall -mmcu=$(MCU) $(INCLUDES) -Os -DF_CPU=16000000UL
 CXXFLAGS=-fno-exceptions $(CFLAGS)
 CC=avr-gcc
 CXX=avr-g++

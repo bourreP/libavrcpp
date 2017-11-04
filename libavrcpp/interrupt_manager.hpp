@@ -17,7 +17,7 @@ public:
     typedef void (*voidFunctionPointer)(void);
 
 public:
-    static voidFunctionPointer interrupts[_VECTORS_SIZE];
+    static voidFunctionPointer interrupts[_VECTORS_SIZE / 4];
 
 public:
     static inline void attach(uint8_t vector, void (*user_function)(void))
