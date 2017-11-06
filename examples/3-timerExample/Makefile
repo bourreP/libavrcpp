@@ -4,7 +4,7 @@
 ##########------------------------------------------------------##########
 
 MCU   = atmega328p
-F_CPU = 20000000UL  
+F_CPU = 16000000UL  
 
 ## A directory for common include files and the simple USART library.
 ## If you move either the current folder or the Library folder, you'll 
@@ -55,26 +55,28 @@ OBJECTS=$(SOURCES:.cpp=.o)
 HEADERS=$(SOURCES:.cpp=.h)
 
 ## Compilation options, type man avr-gcc if you're curious.
-CPPFLAGS = -DF_CPU=$(F_CPU) -I. -I$(LIBDIR)
 CFLAGS = -Os -Wall
 ## Use short (8-bit) data types 
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums 
 ## Splits up object files per function
-CFLAGS += -ffunction-sections -fdata-sections 
+CFLAGS += -ffunction-sections -fdata-sections
+CFLAGS += -I. -I$(LIBDIR)
+CFLAGS += -DF_CPU=$(F_CPU)
+CXXFLAGS = $(CFLAGS)
 LDFLAGS = -Wl,-Map,$(TARGET).map 
 LDFLAGS += -DF_CPU=$(F_CPU)
 ## Optional, but often ends up with smaller code
 LDFLAGS += -Wl,--gc-sections 
 ## Relax shrinks code even more, but makes disassembly messy
 ## LDFLAGS += -Wl,--relax
-LDFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm  ## for floating-point printf
+## LDFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm  ## for floating-point printf
 ## LDFLAGS += -Wl,-u,vfprintf -lprintf_min      ## for smaller printf
 TARGET_ARCH = -mmcu=$(MCU)
 
 ## Explicit pattern rules:
 ##  To make .o files from .cpp files 
-%.o: %.cpp $(HEADERS) Makefile
-	 $(CXX) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c -o $@ $<;
+%.o: %.c $(HEADERS) Makefile
+	 $(CXX) $(CXXFLAGS) $(TARGET_ARCH) -c -o $@ $<;
 
 $(TARGET).elf: $(OBJECTS)
 	$(CXX) $(LDFLAGS) $(TARGET_ARCH) $^ $(LDLIBS) -o $@ 

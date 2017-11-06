@@ -6,3 +6,7 @@
 *.files
 *.includes
 *.settings/
+*.hex
+*.elf
+*.o
+*.map
