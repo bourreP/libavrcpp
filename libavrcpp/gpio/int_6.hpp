@@ -32,19 +32,19 @@ public:
     {
         if (mode == LOW_LEVEL)
         {
-            EICRB &= ~(1 < ISC60) & ~(1 << ISC61);
+            EICRB &= ~(1 << ISC60) & ~(1 << ISC61);
         }
         else if (mode == ANY_LEVEL)
         {
-            EICRB = (EICRB & ~(1 < ISC61)) | (1 << ISC60);
+            EICRB = (EICRB & (1 << ISC60)) | ~(1 << ISC61);
         }
         else if (mode == FALLING_EDGE)
         {
-            EICRB = (EICRB & ~(1 < ISC60)) | (1 << ISC61);
+            EICRB = (EICRB & ~(1 << ISC60)) | (1 << ISC61);
         }
         else if (mode == RISING_EDGE)
         {
-            EICRB |= (1 < ISC60) | (1 << ISC61);
+            EICRB |= (1 << ISC60) | (1 << ISC61);
         }
     }
 

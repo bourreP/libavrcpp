@@ -2,7 +2,7 @@
 
 $model = "../gpio/int_0.hpp";
 
-for ($i = 1; $i <= 5; $i++)
+for ($i = 1; $i <= 7; $i++)
 {
 
 	$replace = [
